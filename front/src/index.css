@@ -1,0 +1,87 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 30 33% 98%;
+    --foreground: 30 10% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 30 10% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 30 10% 15%;
+
+    --primary: 25 83% 62%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 30 20% 95%;
+    --secondary-foreground: 30 10% 15%;
+
+    --muted: 30 20% 95%;
+    --muted-foreground: 30 10% 40%;
+
+    --accent: 25 83% 62%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 30 20% 90%;
+    --input: 30 20% 90%;
+    --ring: 25 83% 62%;
+
+    --radius: 0.5rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
+  }
+}
+
+@layer components {
+  .container-custom {
+    @apply container mx-auto px-4 md:px-8 lg:px-16;
+  }
+  
+  .btn-primary {
+    @apply bg-epe-orange text-white hover:bg-epe-brown transition-colors py-2 px-6 rounded-md font-medium;
+  }
+  
+  .section-title {
+    @apply text-3xl md:text-4xl font-serif font-bold mb-6 text-epe-brown;
+  }
+  
+  .section-subtitle {
+    @apply text-xl md:text-2xl font-serif mb-4 text-epe-brown;
+  }
+  
+  .event-card {
+    @apply bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-[1.02] border border-border;
+  }
+  
+  .nav-link {
+    @apply hover:text-epe-orange transition-colors relative;
+  }
+  
+  .nav-link.active {
+    @apply text-epe-orange;
+  }
+  
+  .nav-link.active::after {
+    content: '';
+    @apply absolute bottom-[-4px] left-0 w-full h-[2px] bg-epe-orange;
+  }
+}
