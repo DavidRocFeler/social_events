@@ -11,6 +11,8 @@ import Collaborate from "./pages/Collaborate";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
+import KomGeniete from "./pages/KomGeniete";
+import Information from "./pages/Information";
 
 const queryClient = new QueryClient();
 
@@ -24,7 +26,9 @@ const App = () => (
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="evenementen" element={<Events />} />
+            <Route path="information/:id"  element={<Information />} />
             <Route path="samenwerken" element={<Collaborate />} />
+            <Route path="komgenieten" element={<KomGeniete/>} />
             <Route path="over-ons" element={<About />} />
             <Route path="contact" element={<Contact />} />
             <Route path="*" element={<NotFound />} />

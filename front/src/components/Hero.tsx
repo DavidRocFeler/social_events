@@ -14,7 +14,7 @@ const Hero = ({ language }: HeroProps) => {
       description:
         "Epe Sociale Evenementen brengt mensen samen rond de eettafel. We bouwen bruggen tussen culturen, creëren begrip en vieren diversiteit door middel van gedeelde maaltijden en verhalen.",
       cta: "Ontdek Onze Evenementen",
-      secondaryCta: "Doe Mee",
+      secondaryCta: "Kom Genieten",
     },
     en: {
       title: "Together at the Table",
@@ -22,7 +22,7 @@ const Hero = ({ language }: HeroProps) => {
       description:
         "Epe Social Events brings people together around the dinner table. We build bridges between cultures, create understanding, and celebrate diversity through shared meals and stories.",
       cta: "Discover Our Events",
-      secondaryCta: "Join Us",
+      secondaryCta: "Come Enjoy",
     },
   };
 
@@ -51,11 +51,15 @@ const Hero = ({ language }: HeroProps) => {
             {t.description}
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
-            <Button asChild size="lg" className="bg-epe-orange hover:bg-epe-brown">
+            <Button
+            onClick={() => window.scrollTo(0, 0)}
+            asChild size="lg" className="bg-epe-orange hover:bg-epe-brown">
               <Link to="/evenementen">{t.cta}</Link>
             </Button>
-            <Button asChild variant="outline" size="lg" className="bg-white/10 text-white border-white hover:bg-white/20">
-              <Link to="/samenwerken">{t.secondaryCta}</Link>
+            <Button 
+            onClick={() => window.scrollTo(0, 0)}
+            asChild variant="outline" size="lg" className="bg-white/10 text-white border-white hover:bg-white/20">
+              <Link to="/komgenieten">{t.secondaryCta}</Link>
             </Button>
           </div>
         </div>

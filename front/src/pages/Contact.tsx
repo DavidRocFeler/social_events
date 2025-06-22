@@ -31,9 +31,8 @@ const Contact = () => {
         subjectOptions: [
           { value: "general", label: "Algemene Vraag" },
           { value: "events", label: "Evenementen" },
-          { value: "volunteer", label: "Vrijwilligerswerk" },
+          { value: "sponsor", label: "Ik wil sponsor worden" },
           { value: "donation", label: "Donaties" },
-          { value: "collaboration", label: "Samenwerking" },
         ],
         message: "Bericht",
         send: "Verstuur Bericht",
@@ -41,10 +40,9 @@ const Contact = () => {
       },
       info: {
         title: "Contactgegevens",
-        address: "Hoofdstraat 23, 8162 AB Epe",
+        address: "Hoofdstraat 46, 8162 AK Epe",
         email: "info@epesocialeevenementen.nl",
         phone: "+31 6 12345678",
-        hours: "Maandag - Vrijdag: 9:00 - 17:00",
       },
     },
     en: {
@@ -59,9 +57,8 @@ const Contact = () => {
         subjectOptions: [
           { value: "general", label: "General Inquiry" },
           { value: "events", label: "Events" },
-          { value: "volunteer", label: "Volunteering" },
+          { value: "sponsor", label: "I want to be a sponsorr" },
           { value: "donation", label: "Donations" },
-          { value: "collaboration", label: "Collaboration" },
         ],
         message: "Message",
         send: "Send Message",
@@ -69,10 +66,9 @@ const Contact = () => {
       },
       info: {
         title: "Contact Information",
-        address: "Main Street 23, 8162 AB Epe",
+        address: "Hoofdstraat 46, 8162 AK Epe",
         email: "info@epesocialevents.nl",
         phone: "+31 6 12345678",
-        hours: "Monday - Friday: 9:00 - 17:00",
       },
     },
   };
@@ -240,7 +236,7 @@ const Contact = () => {
                     <p className="text-gray-600">{t.info.phone}</p>
                   </div>
                 </div>
-                
+{/*                 
                 <div className="flex items-start space-x-4">
                   <Clock className="h-6 w-6 text-epe-orange flex-shrink-0 mt-1" />
                   <div>
@@ -249,12 +245,12 @@ const Contact = () => {
                     </h3>
                     <p className="text-gray-600">{t.info.hours}</p>
                   </div>
-                </div>
+                </div> */}
               </div>
               
               <div className="mt-8 h-64 bg-gray-200 rounded-lg">
                 {/* Map placeholder - In a real implementation, integrate with Google Maps or similar */}
-                <div className="w-full h-full flex items-center justify-center text-gray-500">
+                <div className="bg-[url(/MapEpe.png)] w-full h-full flex items-center justify-center text-gray-500">
                   {language === "nl" ? "Kaart van Epe" : "Map of Epe"}
                 </div>
               </div>

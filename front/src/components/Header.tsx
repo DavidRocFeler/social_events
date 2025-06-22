@@ -3,6 +3,7 @@ import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { Menu, X, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import logo from '/LogoSocialE.png'
 
 interface HeaderProps {
   language: "nl" | "en";
@@ -40,19 +41,18 @@ const Header = ({ language, toggleLanguage }: HeaderProps) => {
       <div className="container-custom py-4">
         <div className="flex items-center justify-between">
           <NavLink to="/" className="flex items-center space-x-2">
-            <div className="h-10 w-10 rounded-full bg-epe-orange flex items-center justify-center text-white font-serif text-xl">
-              E
-            </div>
+            <img src={logo} className="w-10 h-auto" alt="" />
             <span className="font-serif text-xl font-medium">
               {language === "nl" ? "Epe Sociale Evenementen" : "Epe Social Events"}
             </span>
           </NavLink>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
+          <nav className="hidden mmd:flex items-center space-x-8">
             {navItems.map((item) => (
               <NavLink
                 key={item.name}
+                onClick={() => window.scrollTo(0, 0)}
                 to={item.href}
                 className={({ isActive }) =>
                   isActive ? "nav-link active" : "nav-link"
@@ -66,7 +66,7 @@ const Header = ({ language, toggleLanguage }: HeaderProps) => {
               variant="ghost"
               size="icon"
               onClick={toggleLanguage}
-              className="ml-2"
+              className="ml-2 w-fit px-3"
             >
               <Globe className="h-5 w-5" />
               <span className="ml-2 text-sm font-medium">
@@ -76,7 +76,7 @@ const Header = ({ language, toggleLanguage }: HeaderProps) => {
           </nav>
 
           {/* Mobile Navigation Toggle */}
-          <div className="flex md:hidden items-center space-x-4">
+          <div className="flex mmd:hidden items-center space-x-4">
             <Button
               variant="ghost"
               size="icon"
@@ -101,7 +101,7 @@ const Header = ({ language, toggleLanguage }: HeaderProps) => {
 
         {/* Mobile Navigation Menu */}
         {isMenuOpen && (
-          <div className="md:hidden py-4 bg-white animate-fade-in">
+          <div className="mmd:hidden py-4 bg-white animate-fade-in">
             <nav className="flex flex-col space-y-4">
               {navItems.map((item) => (
                 <NavLink

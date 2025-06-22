@@ -6,6 +6,10 @@ import { Button } from "@/components/ui/button";
 const Collaborate = () => {
   const { language } = useOutletContext<{ language: "nl" | "en" }>();
 
+  const handleRedirectContact = () => {
+    window.location.href = '/contact'
+  }
+
   const content = {
     nl: {
       title: "Samenwerken",
@@ -199,7 +203,9 @@ const Collaborate = () => {
           </div>
 
           <div className="text-center mt-12">
-            <Button className="bg-epe-orange hover:bg-epe-brown">
+            <Button 
+            onClick={handleRedirectContact}
+            className="bg-epe-orange hover:bg-epe-brown">
               {t.donate.cta}
             </Button>
           </div>
@@ -207,7 +213,7 @@ const Collaborate = () => {
       </section>
 
       {/* Connect with Talent Section */}
-      <section className="py-16 bg-epe-beige">
+      {/* <section className="py-16 bg-epe-beige">
         <div className="container-custom">
           <div className="text-center mb-12">
             <h2 className="section-title">{t.talent.title}</h2>
@@ -236,10 +242,10 @@ const Collaborate = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Volunteer Section */}
-      <section className="py-16 bg-white">
+      {/* <section className="py-16 bg-white">
         <div className="container-custom">
           <div className="text-center mb-12">
             <h2 className="section-title">{t.volunteer.title}</h2>
@@ -271,7 +277,7 @@ const Collaborate = () => {
             </Button>
           </div>
         </div>
-      </section>
+      </section> */}
     </div>
   );
 };
