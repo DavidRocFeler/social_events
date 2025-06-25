@@ -59,9 +59,9 @@ const Footer = ({ language }: FooterProps) => {
               <a href="#" className="hover:text-epe-orange transition-colors">
                 <Instagram size={20} />
               </a>
-              <a href="#" className="hover:text-epe-orange transition-colors">
+              {/* <a href="#" className="hover:text-epe-orange transition-colors">
                 <Mail size={20} />
-              </a>
+              </a> */}
             </div>
           </div>
           

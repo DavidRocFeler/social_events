@@ -72,12 +72,17 @@ const EventCard: React.FC<IEventCardProps> = ({ event, language, hideButtons }) 
         <div className="mt-auto pt-4 flex flex-col sm:flex-row gap-2">
           <Button 
           onClick={handleRedirectionInfo}
-          variant="outline" size="sm" className="flex-1">
+          variant="outline" 
+          size="sm" 
+          className="flex-1 py-2 sm:py-[initial]"
+          >
             {t.moreInfo}
           </Button>
           <Button 
           onClick={handleRedirectionKom}
-          className="flex-1 bg-epe-orange hover:bg-epe-brown" size="sm">
+          className="flex-1 bg-epe-orange hover:bg-epe-brown py-2 sm:py-[initial]" 
+          size="sm"
+          >
             {t.register}
           </Button>
         </div>

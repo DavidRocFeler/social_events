@@ -10,7 +10,10 @@ export interface IEvent {
   
   // Nuevos campos para la información extendida
   story?: {
-    images: string[];
+    images?: Array<{
+      url: string;
+      title: string;
+    }>;
     content: string[];
     quote: string;
   };
@@ -57,4 +60,37 @@ export interface IKomGenieten {
 export interface IKomGenietenTranslations {
   nl: IKomGenieten;
   en: IKomGenieten;
+}
+
+export interface ContactFormData {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+}
+
+export interface SubjectOption {
+  value: string;
+  label: string;
+}
+
+export interface ContactContent {
+  title: string;
+  subtitle: string;
+  description: string;
+  form: {
+    name: string;
+    email: string;
+    subject: string;
+    subjectOptions: SubjectOption[];
+    message: string;
+    send: string;
+    success: string;
+  };
+  info: {
+    title: string;
+    address: string;
+    email: string;
+    phone: string;
+  };
 }

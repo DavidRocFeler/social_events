@@ -1,79 +1,52 @@
-
 import { useOutletContext } from "react-router-dom";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { MapPin, Mail, Phone, Clock } from "lucide-react";
+import { MapPin, Mail, Phone } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
+import { getContactContent } from "@/helpers/contact.helpers";
+import { ContactFormData } from "@/interface/types";
+import emailjs from "emailjs-com";
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+
+const MySwal = withReactContent(Swal);
 
 const Contact = () => {
   const { language } = useOutletContext<{ language: "nl" | "en" }>();
   const { toast } = useToast();
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<ContactFormData>({
     name: "",
     email: "",
     subject: "",
     message: "",
   });
+  const [loading, setLoading] = useState(false);
+  const t = getContactContent(language);
 
-  const content = {
-    nl: {
-      title: "Contact",
-      subtitle: "Neem Contact Met Ons Op",
-      description:
-        "Heeft u vragen over onze evenementen, wilt u samenwerken of doneren? Vul het onderstaande formulier in of gebruik de contactgegevens om direct contact met ons op te nemen.",
-      form: {
-        name: "Naam",
-        email: "E-mailadres",
-        subject: "Onderwerp",
-        subjectOptions: [
-          { value: "general", label: "Algemene Vraag" },
-          { value: "events", label: "Evenementen" },
-          { value: "sponsor", label: "Ik wil sponsor worden" },
-          { value: "donation", label: "Donaties" },
-        ],
-        message: "Bericht",
-        send: "Verstuur Bericht",
-        success: "Bedankt! Uw bericht is verzonden. We nemen zo snel mogelijk contact met u op.",
-      },
-      info: {
-        title: "Contactgegevens",
-        address: "Hoofdstraat 46, 8162 AK Epe",
-        email: "info@epesocialeevenementen.nl",
-        phone: "+31 6 12345678",
-      },
-    },
-    en: {
-      title: "Contact",
-      subtitle: "Get In Touch With Us",
-      description:
-        "Do you have questions about our events, want to collaborate or donate? Fill out the form below or use the contact details to get in touch with us directly.",
-      form: {
-        name: "Name",
-        email: "Email Address",
-        subject: "Subject",
-        subjectOptions: [
-          { value: "general", label: "General Inquiry" },
-          { value: "events", label: "Events" },
-          { value: "sponsor", label: "I want to be a sponsorr" },
-          { value: "donation", label: "Donations" },
-        ],
-        message: "Message",
-        send: "Send Message",
-        success: "Thank you! Your message has been sent. We will get back to you as soon as possible.",
-      },
-      info: {
-        title: "Contact Information",
-        address: "Hoofdstraat 46, 8162 AK Epe",
-        email: "info@epesocialevents.nl",
-        phone: "+31 6 12345678",
-      },
-    },
+  const showSuccessAlert = () => {
+    MySwal.fire({
+      title: language === "en" ? "Success!" : "Succes!",
+      text: t.form.success,
+      icon: 'success',
+      confirmButtonColor: '#e67e22', // epe-orange
+      background: '#f5f5dc', // epe-beige
+      iconColor: '#a0583a' // epe-brown
+    });
   };
 
-  const t = content[language];
+  const showErrorAlert = (message: string) => {
+    MySwal.fire({
+      title: language === "en" ? "Error!" : "Fout!",
+      text: message,
+      icon: 'error',
+      confirmButtonColor: '#e67e22', // epe-orange
+      background: '#f5f5dc', // epe-beige
+      iconColor: '#a0583a' // epe-brown
+    });
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -86,22 +59,50 @@ const Contact = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
-    
-    // Show success message
-    toast({
-      title: language === "nl" ? "Bericht Verzonden" : "Message Sent",
-      description: t.form.success,
-      duration: 5000,
-    });
-    
-    // Reset form
-    setFormData({
-      name: "",
-      email: "",
-      subject: "",
-      message: "",
-    });
+    setLoading(true);
+
+    // Crear el mensaje completo con todos los datos
+    const fullMessage = `
+      Contact Form Submission:
+      Name: ${formData.name}
+      Email: ${formData.email}
+      Subject: ${formData.subject}
+      
+      Message:
+      ${formData.message}
+    `;
+
+    const templateParams = {
+      from_name: formData.name,
+      from_email: formData.email,
+      subject: formData.subject,
+      message: fullMessage, // Todos los datos importantes aquí
+      to_name: "EPE Team"
+    };
+
+    emailjs.send(
+      "service_14shih4", // Reemplaza con tu Service ID
+      "template_pgpao1n", // Reemplaza con tu Template ID
+      templateParams,
+      "8phFAjNKAgrAM4U6A" // Reemplaza con tu User ID
+    )
+    .then(() => {
+      showSuccessAlert();
+      setFormData({
+        name: "",
+        email: "",
+        subject: "",
+        message: "",
+      });
+    })
+    .catch(() => {
+      showErrorAlert(
+        language === "en" 
+          ? "Failed to send message. Please try again later." 
+          : "Bericht verzenden mislukt. Probeer het later opnieuw."
+      );
+    })
+    .finally(() => setLoading(false));
   };
 
   return (
@@ -194,8 +195,19 @@ const Contact = () => {
                 <Button 
                   type="submit" 
                   className="w-full bg-epe-orange hover:bg-epe-brown"
+                  disabled={loading}
                 >
-                  {t.form.send}
+                  {loading ? (
+                    <span className="flex items-center">
+                      <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      {language === "en" ? "Sending..." : "Verzenden..."}
+                    </span>
+                  ) : (
+                    t.form.send
+                  )}
                 </Button>
               </form>
             </div>
@@ -236,20 +248,9 @@ const Contact = () => {
                     <p className="text-gray-600">{t.info.phone}</p>
                   </div>
                 </div>
-{/*                 
-                <div className="flex items-start space-x-4">
-                  <Clock className="h-6 w-6 text-epe-orange flex-shrink-0 mt-1" />
-                  <div>
-                    <h3 className="font-medium mb-1">
-                      {language === "nl" ? "Openingstijden" : "Opening Hours"}
-                    </h3>
-                    <p className="text-gray-600">{t.info.hours}</p>
-                  </div>
-                </div> */}
               </div>
               
               <div className="mt-8 h-64 bg-gray-200 rounded-lg">
-                {/* Map placeholder - In a real implementation, integrate with Google Maps or similar */}
                 <div className="bg-[url(/MapEpe.png)] w-full h-full flex items-center justify-center text-gray-500">
                   {language === "nl" ? "Kaart van Epe" : "Map of Epe"}
                 </div>

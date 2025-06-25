@@ -50,7 +50,7 @@ const Information = () => {
   return (
     <div className='flex flex-col mmd:flex-row bg-epe-beige min-h-screen'>
       {/* Sección de texto - Usando datos del evento */}
-      <section className='w-full mmd:w-[50%] p-8 md:p-12 lg:p-16 overflow-y-auto h-[35.5rem] pb-10'>
+      <section className='w-full mmd:w-[50%] p-8 md:p-12 lg:p-16 mmd:overflow-y-auto mmd:h-[35.5rem] pb-10'>
         <div className="max-w-2xl mx-auto">
           <h1 className="text-4xl font-serif font-bold text-epe-brown mb-6">
             {currentEvent.title}
@@ -108,21 +108,18 @@ const Information = () => {
       </section>
 
       {/* Carrusel con flechas personalizadas */}
-      <section className='w-full mmd:w-[50%] top-0 h-screen relative'>
+      <section className='w-full mmd:w-[50%] top-0 h-screen relative mt-8 mmd:mt-0'>
         <Slider {...sliderSettings} ref={sliderRef} className="bottom-10">
           {currentEvent.story.images.map((img, index) => (
             <div key={index} className="relative h-screen">
               <img 
-                src={img} 
+                src={img.url} 
                 alt={`${currentEvent.title} - Image ${index + 1}`}
                 className="w-full h-full object-cover"
               />
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-8 text-white">
-                <p className="text-sm opacity-75">
-                  {index + 1}/{currentEvent.story.images.length}
-                </p>
                 <h3 className="text-2xl font-serif mt-1">
-                  {currentEvent.title}
+                  {img.title}
                 </h3>
                 <p className="text-sm mt-2 opacity-90">
                   {currentEvent.country} - {currentEvent.cuisine}
